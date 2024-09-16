@@ -1,0 +1,22 @@
+<script>
+	function test(){
+		console.log("debug")
+		var input = document.querySelector('input[type="file"]')
+		
+		var data = new FormData()
+		data.append("file",input.files[0])
+		data.append("user","hubot")
+		
+		console.log(data)
+	}
+</script>
+<h1>Company</h1>
+<hr>
+<form action="/user/reg" method="post" enctype="multipart/form-data">
+	Account:<input name="account"><br><br>
+	Password:<input name="password"><br><br>
+	Name:<input name="name"><br><br>
+	Icon:<input name="icon" type="file"><br><br>
+	<input type="submit" value="register">
+	<button id="test" onclick="test()">Test</button>
+</form>
