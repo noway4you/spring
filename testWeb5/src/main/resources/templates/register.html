@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script>
+	
+	function register(){
+		let account = document.getElementById('account').value;
+		let password = document.getElementById('password').value;
+		let name = document.getElementById('name').value;
+		
+		let data = {
+				account:account,
+				password:password,
+				name:name
+		};
+		
+		fetch('/user/register',{
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json'
+			},
+			body:JSON.stringify(data)
+		})
+		.then(response => {
+			if(!response.ok){
+				throw new Error('error');
+			}
+			return response.json();
+		})
+		.then(data => {
+			console.log('Success:' + data);
+			
+		})
+		.catch(error =>　{
+			console.error('err:',error);
+		});
+	}
+	
+	function checkAccount(){
+		let account = document.getElementById('account').value; 
+		fetch('/user/isexist/' + account)
+		.then(response => {
+			if(!response.ok){
+				throw new Error('error');
+			}
+			return response.json();
+		})
+		.then(data => {
+			console.log(data);
+			document.getElementById('checkMessage').innerHTML = data.message;
+		})
+		.catch(error =>　{
+			console.error('err:',error);
+		});
+	}
+</script>
+<div th:include="header"></div>
+
+	Register Page
+	<hr>
+	Account: <input id="account" onblur="checkAccount()"> <span id="checkMessage"></span> <br><br>
+	Password: <input type="password" id="password"><br><br>
+	Name: <input id="name"><br><br>
+	<button onclick="register()">Register</button>
+	
+<div th:include="footer"></div>
